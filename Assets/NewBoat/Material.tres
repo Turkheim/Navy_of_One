@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cxu6qenecbiy6"]
+
+[ext_resource type="Texture2D" uid="uid://jxrs1bb8j3h3" path="res://Assets/NewBoat/Armor_Armor.png" id="1_bdoh4"]
+
+[resource]
+resource_name = "Material"
+cull_mode = 2
+albedo_color = Color(0.135, 0.24, 0.06, 1)
+albedo_texture = ExtResource("1_bdoh4")

@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://dekarqxn6qqtn"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_euuuk"]
+radius = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_4mw4s"]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="Curve" id="Curve_4mw4s"]
+_data = [Vector2(0, 0.404494), 0.0, 0.0, 0, 0, Vector2(1, 0.202247), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xjght"]
+curve = SubResource("Curve_4mw4s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oduel"]
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_xjght")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ycag2"]
+
+[node name="Bullet" type="RigidBody3D"]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_euuuk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("SphereMesh_4mw4s")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 16
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_oduel")
+draw_pass_1 = SubResource("SphereMesh_ycag2")

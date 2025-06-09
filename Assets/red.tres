@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://glfa72gc4sog"]
+
+[ext_resource type="Texture2D" uid="uid://bw43ch3sj1qew" path="res://Assets/nois.png" id="1_dc4sf"]
+
+[resource]
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = ExtResource("1_dc4sf")
+roughness = 0.2
+uv1_scale = Vector3(3, 3, 3)
+texture_filter = 0
