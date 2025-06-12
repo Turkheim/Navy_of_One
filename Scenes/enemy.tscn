@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=4 uid="uid://c5rrebyww7bg0"]
+[gd_scene load_steps=26 format=4 uid="uid://c5rrebyww7bg0"]
 
 [ext_resource type="Script" uid="uid://dkucl6x0svvh1" path="res://Scenes/Enemy.gd" id="1_yys62"]
 [ext_resource type="AudioStream" uid="uid://deyis78q1irkl" path="res://Assets/Boom.wav" id="3_afpow"]
 [ext_resource type="Texture2D" uid="uid://csef3qunkbea1" path="res://Assets/Dam/Dam_wall.png" id="4_0830c"]
+[ext_resource type="Script" uid="uid://7lf4e4h4t6wi" path="res://Scenes/Impact.gd" id="4_ghaa6"]
 [ext_resource type="Texture2D" uid="uid://drq4vdquyqs41" path="res://Assets/Dam/Dam_coastalGun.png" id="5_ghaa6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1dp5w"]
@@ -124,6 +125,18 @@ shadow_mesh = SubResource("ArrayMesh_bcpfy")
 [sub_resource type="BoxShape3D" id="BoxShape3D_0830c"]
 size = Vector3(2, 1.5, 2)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1dp5w"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="Gradient" id="Gradient_auwsv"]
+offsets = PackedFloat32Array(0, 0.372727, 0.963636)
+colors = PackedColorArray(2, 2, 0, 1, 1, 0.533333, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8uf12"]
+gradient = SubResource("Gradient_auwsv")
+use_hdr = true
+
 [sub_resource type="Curve" id="Curve_287tu"]
 _limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.558824, 2), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -135,8 +148,9 @@ curve = SubResource("Curve_287tu")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ghaa6"]
 direction = Vector3(0, 1, 0)
 initial_velocity_min = 10.0
-initial_velocity_max = 10.0
+initial_velocity_max = 50.23
 scale_curve = SubResource("CurveTexture_0830c")
+color_ramp = SubResource("GradientTexture1D_8uf12")
 
 [sub_resource type="SphereMesh" id="SphereMesh_1dp5w"]
 
@@ -203,6 +217,7 @@ volume_db = 80.0
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2, -6.7)
 mesh = SubResource("ArrayMesh_hjcbq")
 skeleton = NodePath("")
+script = ExtResource("4_ghaa6")
 
 [node name="Bunker" type="MeshInstance3D" parent="Dam2/Tower"]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 16, 0)
@@ -225,6 +240,7 @@ shape = SubResource("BoxShape3D_0830c")
 
 [node name="Impact" type="GPUParticles3D" parent="Dam2/Tower"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 16.7, -4.76837e-06)
+material_override = SubResource("StandardMaterial3D_1dp5w")
 emitting = false
 amount = 25
 one_shot = true
@@ -237,6 +253,7 @@ draw_pass_1 = SubResource("SphereMesh_1dp5w")
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2, 6.7)
 mesh = SubResource("ArrayMesh_hjcbq")
 skeleton = NodePath("")
+script = ExtResource("4_ghaa6")
 
 [node name="Bunker" type="MeshInstance3D" parent="Dam2/Tower2"]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 16, 0)
@@ -256,16 +273,6 @@ collision_mask = 512
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Dam2/Tower2/Bunker/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.25, -5)
 shape = SubResource("BoxShape3D_0830c")
-
-[node name="Impact" type="GPUParticles3D" parent="Dam2/Tower2"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 16.7, -7.62939e-06)
-emitting = false
-amount = 25
-one_shot = true
-explosiveness = 1.0
-fixed_fps = 60
-process_material = SubResource("ParticleProcessMaterial_ghaa6")
-draw_pass_1 = SubResource("SphereMesh_1dp5w")
 
 [node name="Dam" type="MeshInstance3D" parent="Dam2"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2, -5)
@@ -307,4 +314,6 @@ shape = SubResource("CylinderShape3D_0830c")
 
 [connection signal="finished" from="Hit" to="." method="_on_hit_finished"]
 [connection signal="body_entered" from="Dam2/Tower/Bunker/Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Dam2/Tower/Bunker/Area3D" to="Dam2/Tower" method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="Dam2/Tower2/Bunker/Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Dam2/Tower2/Bunker/Area3D" to="Dam2/Tower2" method="_on_area_3d_body_entered"]
