@@ -274,6 +274,17 @@ collision_mask = 512
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.25, -5)
 shape = SubResource("BoxShape3D_0830c")
 
+[node name="Impact" type="GPUParticles3D" parent="Dam2/Tower2"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 16.7, -0.10144)
+material_override = SubResource("StandardMaterial3D_1dp5w")
+emitting = false
+amount = 25
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_ghaa6")
+draw_pass_1 = SubResource("SphereMesh_1dp5w")
+
 [node name="Dam" type="MeshInstance3D" parent="Dam2"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2, -5)
 mesh = SubResource("ArrayMesh_hmuuy")
